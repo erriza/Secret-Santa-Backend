@@ -8,13 +8,14 @@ const app: Express = express();
 // Middleware
 app.use(cors());
 app.use(bodyParser.json());
+app.use(express.static('dist'));
 
 // Routes
-app.get('/ping', (_req, res) => {
+app.get('/api/ping', (_req, res) => {
     res.send('pong');
 });
 
-app.get('/families', async (_req: Request, res: Response) => {
+app.get('/api/families', async (_req: Request, res: Response) => {
     try {
         const families = await FamilyModel.find();
         res.send(families);
@@ -23,7 +24,7 @@ app.get('/families', async (_req: Request, res: Response) => {
     }
 });
 
-app.post('/families', async (req: Request, res: Response) => {
+app.post('/api/families', async (req: Request, res: Response) => {
     try {
         const newFamily: Family = req.body;
         const addedFamily = new FamilyModel(newFamily);
