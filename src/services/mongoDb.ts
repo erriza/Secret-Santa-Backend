@@ -1,7 +1,7 @@
 import mongoose from 'mongoose';
 import dotenv from 'dotenv';
 import { FamilyModel } from '../models/family';
-import exampleFamilyData from '../../data/families';
+import exampleFamilyData from '../data/families';
 
 dotenv.config();
 
