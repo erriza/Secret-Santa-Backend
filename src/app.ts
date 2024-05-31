@@ -37,11 +37,9 @@ app.post('/api/families', async (req, res) => {
   const { familyName, memberName } = req.body;
 
   try {
-    // 1. Check if the family exists
     let family = await FamilyModel.findOne({ name: familyName }).lean() as Family & { familyId: string }; 
 
     if (family) {
-      // 2. Add the member to the existing family
       const newMember: FamilyMember = {
         _id: new Types.ObjectId(),
         name: memberName,
@@ -52,11 +50,9 @@ app.post('/api/families', async (req, res) => {
 
       return res.json({ message: 'Member added successfully', family });
     } else {
-      // 3. Find the highest familyId and increment it
       const maxFamily = await FamilyModel.findOne().sort({ familyId: -1 }).lean() as Family & { familyId: string };
       const newFamilyId = maxFamily ? (parseInt(maxFamily.familyId) + 1).toString() : '1'; 
 
-      // 4. Create a new family with the member
       const newFamily = new FamilyModel({
         name: familyName,
         familyId: newFamilyId,
