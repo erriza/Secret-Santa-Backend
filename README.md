@@ -68,10 +68,26 @@ The server uses MongoDB to store family data and pairing history.
 
 The server exposes the following API endpoints:
 
+### API Endpoints
+
 #### **`/api/families`**
 
 - **GET:** Retrieves all families from the database.
-- **POST:** Creates a new family. Requires a body with a `name` field.
+- **POST:** Creates a new family or adds a member to an existing family. 
+    - Requires a body with `familyName` and `memberName` fields.
+    - If a family with `familyName` exists, it adds the `memberName` to the family.
+    - If a family with `familyName` doesn't exist, it creates a new family with the `familyName` and adds the `memberName` as the first member.
+
+#### **`/api/families/:familyId/members/:memberId`**
+
+- **DELETE:** Removes a member from a family. 
+    - `familyId` and `memberId` are both required.
+    - If the family is empty after removing the member, the family itself is deleted.
+
+#### **`/api/families/:familyId`**
+
+- **DELETE:** Deletes an entire family.
+    - `familyId` is required.
 
 ### Contribution
 
