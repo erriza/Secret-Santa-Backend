@@ -102,6 +102,10 @@ app.delete('/api/families/:familyId/members/:memberId', async (req, res) => {
         // Update the family in the database
         await family.save();
 
+        // Delete the empty family collection
+        if(family.members.length === 0) {
+          await FamilyModel.findByIdAndDelete(familyId);
+        }
         return res.status(204).send(); // No content
     } catch (error) {
         console.error("Error deleting member:", error);
