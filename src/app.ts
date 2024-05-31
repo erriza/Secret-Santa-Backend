@@ -6,15 +6,20 @@ import { FamilyModel, Family } from './models/family';
 const app: Express = express();
 
 // Middleware
+// Enable CORS for cross-origin requests
 app.use(cors());
 app.use(bodyParser.json());
+
+//Serve statis files from 'dist' directory (for the frontend application)
 app.use(express.static('dist'));
 
 // Routes
+// Simple endpoint for testing the connection
 app.get('/api/ping', (_req, res) => {
     res.send('pong');
 });
 
+// Get all the families from the database
 app.get('/api/families', async (_req: Request, res: Response) => {
     try {
         const families = await FamilyModel.find();
@@ -24,6 +29,7 @@ app.get('/api/families', async (_req: Request, res: Response) => {
     }
 });
 
+// Create a new family in the database
 app.post('/api/families', async (req: Request, res: Response) => {
     try {
         const newFamily: Family = req.body;
