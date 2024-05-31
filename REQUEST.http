@@ -1,0 +1,17 @@
+
+DELETE http://localhost:3001/api/families/6658dc3348f8c70aaee1cf2e/members/6658dc3348f8c70aaee1cf32
+
+###
+DELETE http://localhost:3001/api/families/6658dfbf48f8c70aaee1d012
+
+###
+GET http://localhost:3001/api/families/
+
+###
+POST http://localhost:3001/api/families
+Content-Type: application/json
+
+ {
+     "familyName": "The Ricos", 
+     "memberName": "Erick Rico"
+ }

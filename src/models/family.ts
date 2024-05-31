@@ -1,25 +1,27 @@
-import mongoose, { Document } from 'mongoose';
+import mongoose, { Document, Schema } from 'mongoose';
 
-//Defines the structre for a family member
+// Defines the structure for a family member
 export interface FamilyMember {
+  _id: mongoose.Types.ObjectId;
   name: string;
-  familyId: number;
 }
 
-//Defines the structure for a family, extending the Moongose Document Interface
+// Defines the structure for a family, extending the Mongoose Document Interface
 export interface Family extends Document {
   name: string;
   members: FamilyMember[];
 }
 
-//Creates the Moongose schema for the Family model
-const familySchema = new mongoose.Schema({
-  name: String,
-  members: [{
-    name: String,
-    familyId: Number
-  }]
+// Creates the Mongoose schema for the Family model
+const familyMemberSchema = new Schema({
+  _id: { type: Schema.Types.ObjectId, required: true, auto: true },
+  name: { type: String, required: true }
 });
 
-//Defines the Mongoose model for the Family collection
+const familySchema = new mongoose.Schema({
+  name: String,
+  members: [familyMemberSchema] // Use the nested schema here
+});
+
+// Defines the Mongoose model for the Family collection
 export const FamilyModel = mongoose.model<Family>('Family', familySchema);
